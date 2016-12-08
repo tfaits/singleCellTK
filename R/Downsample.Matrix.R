@@ -51,7 +51,7 @@ powerCalc <- function(datamatrix, sampleSizeRange=c(1000,10000000), byBatch=FALS
   return(outmat)
 }
 
-require(multtest)
+
 multiple.t.test <- function(class.labels, dataset, test.type="t.equalvar") {
   tval <- multtest::mt.teststat(dataset, classlabel=class.labels, test=test.type, nonpara="n")
   df <- (ncol(dataset) - 2)
@@ -59,7 +59,6 @@ multiple.t.test <- function(class.labels, dataset, test.type="t.equalvar") {
   fdr <- p.adjust(pval, method="fdr")
   return(fdr)
 }
-require(DESeq)
 
 #' Calculate power to discover differentially expressed genes upon subsampling
 #'

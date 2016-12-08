@@ -1,5 +1,7 @@
 library(shiny)
 library(scater)
+library(multtest)
+library(DESeq)
 
 #1GB max upload size
 options(shiny.maxRequestSize=1000*1024^2)
@@ -83,8 +85,8 @@ shinyServer(function(input, output, session) {
 #    if(exists('subData$counts')){
       output$powerBoxPlot <- renderPlot({
         subData <- Downsample(counts(vals$counts), newcounts=floor(2^seq.int(from=log2(input$minSim), to=log2(input$maxSim), length.out=10)), iterations=input$iterations)
-        diffPower <- differentialPower(datamatrix=counts(vals$counts), downmatrix=subData, conditions=phenoData(vals$counts)[[input$subCovariate]], method=input$selectDiffMethod)
-        boxplot(diffPower)#,names=floor(2^seq.int(from=log2(input$minSim), to=log2(input$maxSim), length.out=10)))
+        diffPower <- differentialPower(datamatrix=counts(vals$counts), downmatrix=subData, conditions=phenoData(vals$counts)[[input$subCovariate]])#, method=input$selectDiffMethod)
+        boxplot(diffPower,names=floor(2^seq.int(from=log2(input$minSim), to=log2(input$maxSim), length.out=10)))
       })
 #    }
 #    else{
